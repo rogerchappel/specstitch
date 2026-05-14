@@ -20,3 +20,7 @@ specstitch is designed for agents and maintainers who need quick, deterministic 
 ## Safety
 
 The tool only reads local text files and writes reports to configurable local paths. It does not call remote APIs or send project content anywhere.
+
+## Config-aware gates
+
+Repositories can commit `specstitch.config.json` so humans, agents, and CI all share the same PRD/TASKS paths and drift thresholds. Use CLI flags only for one-off stricter checks.
