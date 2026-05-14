@@ -4,11 +4,11 @@
   "description": "Local-first traceability quilt for PRDs, tasks, docs, tests, and source drift.",
   "type": "module",
   "bin": {
-    "specstitch": "./dist/cli.js"
+    "specstitch": "./dist/src/cli.js"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/src/index.js"
   },
   "files": [
     "dist",
