@@ -1,0 +1,6 @@
+{
+  "name": "tagged-fixture",
+  "scripts": {
+    "scan": "specstitch scan"
+  }
+}
