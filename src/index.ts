@@ -1,4 +1,5 @@
 export { check } from './check.js';
+export { loadConfig } from './config.js';
 export { scan, writeReports } from './scan.js';
 export { extractRequirements, extractTags, keywordsFor } from './extract.js';
 export { renderMarkdown, summarize } from './report.js';
