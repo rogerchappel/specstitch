@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import path from 'node:path';
 import { check } from './check.js';
+import { loadConfig } from './config.js';
 import { scan } from './scan.js';
 
 const VERSION = '0.1.0';
@@ -19,13 +20,14 @@ async function main(argv: string[]): Promise<number> {
   }
 
   const root = path.resolve(String(parsed.options.root ?? process.cwd()));
+  const config = await loadConfig(root, stringOption(parsed.options.config));
   if (parsed.command === 'scan') {
     const result = await scan({
       root,
-      prdPath: stringOption(parsed.options.prd),
-      tasksPath: stringOption(parsed.options.tasks),
-      outMarkdown: stringOption(parsed.options.markdown),
-      outJson: stringOption(parsed.options.json),
+      prdPath: stringOption(parsed.options.prd) ?? config.prdPath,
+      tasksPath: stringOption(parsed.options.tasks) ?? config.tasksPath,
+      outMarkdown: stringOption(parsed.options.markdown) ?? config.outMarkdown,
+      outJson: stringOption(parsed.options.json) ?? config.outJson,
       write: parsed.options.write !== false
     });
     printSummary(result.summary);
@@ -35,13 +37,13 @@ async function main(argv: string[]): Promise<number> {
   if (parsed.command === 'check') {
     const checked = await check({
       root,
-      prdPath: stringOption(parsed.options.prd),
-      tasksPath: stringOption(parsed.options.tasks),
-      outMarkdown: stringOption(parsed.options.markdown),
-      outJson: stringOption(parsed.options.json),
+      prdPath: stringOption(parsed.options.prd) ?? config.prdPath,
+      tasksPath: stringOption(parsed.options.tasks) ?? config.tasksPath,
+      outMarkdown: stringOption(parsed.options.markdown) ?? config.outMarkdown,
+      outJson: stringOption(parsed.options.json) ?? config.outJson,
       write: parsed.options.write !== false,
-      minCoverage: numberOption(parsed.options['min-coverage'], 0.8),
-      maxStale: numberOption(parsed.options['max-stale'], 0)
+      minCoverage: numberOption(parsed.options['min-coverage'], config.minCoverage ?? 0.8),
+      maxStale: numberOption(parsed.options['max-stale'], config.maxStale ?? 0)
     });
     printSummary(checked.result.summary);
     if (!checked.ok) {
@@ -80,7 +82,8 @@ function parse(argv: string[]): Parsed {
 }
 
 function printHelp(): void {
-  console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-stale 0]\n\nOptions:\n  --markdown <path>       Markdown output path (default docs/TRACEABILITY.md)\n  --json <path>           JSON output path (default docs/traceability.json)\n  --no-write              Analyze without writing reports\n  --help                  Show help\n  --version               Show version`);
+  console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-stale 0]\n\nOptions:\n  --markdown <path>       Markdown output path (default docs/TRACEABILITY.md)\n  --json <path>           JSON output path (default docs/traceability.json)\n  --config <path>         Config file path (default specstitch.config.json)
+  --no-write              Analyze without writing reports\n  --help                  Show help\n  --version               Show version`);
 }
 
 function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {
