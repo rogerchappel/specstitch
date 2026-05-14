@@ -30,6 +30,23 @@ specstitch check --root . --min-coverage 0.8 --max-stale 0
 
 `check` runs the same scan and exits non-zero when coverage is below the threshold or stale tags exceed the maximum.
 
+## Configuration
+
+Create `specstitch.config.json` to set default paths and thresholds:
+
+```json
+{
+  "prdPath": "docs/PRD.md",
+  "tasksPath": "docs/TASKS.md",
+  "outMarkdown": "docs/TRACEABILITY.md",
+  "outJson": "docs/traceability.json",
+  "minCoverage": 0.8,
+  "maxStale": 0
+}
+```
+
+CLI flags override config values.
+
 ## Examples
 
 Tagged evidence works best:
