@@ -1,0 +1,937 @@
+{
+  "generatedAt": "2026-05-14T08:41:41.348Z",
+  "root": "/Users/roger/Developer/my-opensource/specstitch",
+  "summary": {
+    "total": 12,
+    "covered": 12,
+    "orphan": 0,
+    "stale": 5,
+    "coverage": 1
+  },
+  "requirements": [
+    {
+      "id": "PRD-001",
+      "source": "prd",
+      "text": "`specstitch scan` reads `docs/PRD.md`, `docs/TASKS.md`, README, tests, package scripts, and source headings/comments.",
+      "file": "docs/PRD.md",
+      "line": 18,
+      "tags": [],
+      "keywords": [
+        "specstitch",
+        "reads",
+        "tasks",
+        "readme",
+        "tests",
+        "package",
+        "scripts",
+        "source",
+        "headings",
+        "comments"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/PRD.md",
+          "line": 18,
+          "kind": "keyword",
+          "excerpt": "- `specstitch scan` reads `docs/PRD.md`, `docs/TASKS.md`, README, tests, package scripts, and source headings/comments.",
+          "score": 10
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-002 Read docs/PRD.md, docs/TASKS.md, README, tests, package scripts, and source comments/headings.",
+          "score": 8
+        },
+        {
+          "file": "README.md",
+          "line": 26,
+          "kind": "keyword",
+          "excerpt": "`scan` reads `docs/PRD.md`, `docs/TASKS.md`, `README.md`, `package.json`, `src`, `test`, and `tests`, then writes:",
+          "score": 5
+        },
+        {
+          "file": "docs/orchestration.json",
+          "line": 9,
+          "kind": "keyword",
+          "excerpt": "\"inputs\": [\"docs/PRD.md\", \"docs/TASKS.md\", \"README.md\", \"src\", \"tests\", \"package.json\"],",
+          "score": 4
+        },
+        {
+          "file": "package.json",
+          "line": 4,
+          "kind": "package-script",
+          "excerpt": "\"description\": \"Local-first traceability quilt for PRDs, tasks, docs, tests, and source drift.\",",
+          "score": 4
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 6,
+          "kind": "keyword",
+          "excerpt": "`specstitch` builds a traceability quilt between PRDs, task lists, docs, tests, and source files — then highlights drift before it becomes archaeology. 🪡",
+          "score": 3
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 1,
+          "kind": "heading",
+          "excerpt": "# specstitch TASKS",
+          "score": 3
+        },
+        {
+          "file": "README.md",
+          "line": 3,
+          "kind": "keyword",
+          "excerpt": "A tiny local-first CLI that stitches PRDs, task lists, docs, tests, and source comments into a traceability quilt. It is deliberately boring: deterministic text parsing, no LLM cal",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-001",
+      "source": "prd",
+      "text": "Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.",
+      "file": "docs/PRD.md",
+      "line": 19,
+      "tags": [
+        "REQ-001"
+      ],
+      "keywords": [
+        "extract",
+        "requirement",
+        "task",
+        "bullets",
+        "match",
+        "using",
+        "explicit",
+        "tags",
+        "req-001",
+        "fuzzy",
+        "local",
+        "heuristics"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 10,
+          "kind": "explicit-tag",
+          "excerpt": "4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.",
+          "score": 100
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 3,
+          "kind": "explicit-tag",
+          "excerpt": "- [x] REQ-001 Build a Node/TypeScript CLI with `scan` and `check` commands.",
+          "score": 100
+        },
+        {
+          "file": "README.md",
+          "line": 38,
+          "kind": "explicit-tag",
+          "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
+          "score": 100
+        },
+        {
+          "file": "README.md",
+          "line": 42,
+          "kind": "explicit-tag",
+          "excerpt": "// REQ-001 scan PRD and TASKS documents into requirement records.",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 6,
+          "kind": "explicit-tag",
+          "excerpt": "const requirements = extractRequirements('- REQ-001 The CLI must scan docs.\\n- nice to have', 'docs/PRD.md', 'prd');",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 8,
+          "kind": "explicit-tag",
+          "excerpt": "assert.equal(requirements[0]?.id, 'REQ-001');",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 9,
+          "kind": "explicit-tag",
+          "excerpt": "assert.deepEqual(requirements[0]?.tags, ['REQ-001']);",
+          "score": 100
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/docs/PRD.md",
+          "line": 3,
+          "kind": "explicit-tag",
+          "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "PRD-002",
+      "source": "prd",
+      "text": "Emit `docs/TRACEABILITY.md` and JSON with covered/orphan/stale items.",
+      "file": "docs/PRD.md",
+      "line": 20,
+      "tags": [],
+      "keywords": [
+        "emit",
+        "traceability",
+        "json",
+        "covered",
+        "orphan",
+        "stale",
+        "items"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/PRD.md",
+          "line": 20,
+          "kind": "keyword",
+          "excerpt": "- Emit `docs/TRACEABILITY.md` and JSON with covered/orphan/stale items.",
+          "score": 7
+        },
+        {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 8,
+          "kind": "keyword",
+          "excerpt": "2. Review `docs/TRACEABILITY.md` for orphan requirements and stale tags.",
+          "score": 3
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 7,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-005 Emit docs/TRACEABILITY.md and docs/traceability.json from scans.",
+          "score": 3
+        },
+        {
+          "file": "src/cli.ts",
+          "line": 83,
+          "kind": "keyword",
+          "excerpt": "console.log(`specstitch ${VERSION}\\n\\nUsage:\\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st",
+          "score": 3
+        },
+        {
+          "file": "src/cli.ts",
+          "line": 86,
+          "kind": "keyword",
+          "excerpt": "function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {",
+          "score": 3
+        },
+        {
+          "file": "src/types.ts",
+          "line": 1,
+          "kind": "keyword",
+          "excerpt": "export type StitchStatus = 'covered' | 'orphan' | 'stale';",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/docs/PRD.md",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "- REQ-002 The scanner should emit traceability markdown and JSON reports.",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/src/index.ts",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "// REQ-002 emit markdown and JSON traceability reports.",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "PRD-003",
+      "source": "prd",
+      "text": "`specstitch check` exits non-zero on configurable drift thresholds.",
+      "file": "docs/PRD.md",
+      "line": 21,
+      "tags": [],
+      "keywords": [
+        "specstitch",
+        "check",
+        "exits",
+        "non-zero",
+        "configurable",
+        "drift",
+        "thresholds"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/PRD.md",
+          "line": 21,
+          "kind": "keyword",
+          "excerpt": "- `specstitch check` exits non-zero on configurable drift thresholds.",
+          "score": 7
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 8,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-006 Make `check` exit non-zero when coverage or stale evidence thresholds fail.",
+          "score": 3
+        },
+        {
+          "file": "README.md",
+          "line": 31,
+          "kind": "keyword",
+          "excerpt": "`check` runs the same scan and exits non-zero when coverage is below the threshold or stale tags exceed the maximum.",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-001",
+      "source": "tasks",
+      "text": "REQ-001 Build a Node/TypeScript CLI with `scan` and `check` commands.",
+      "file": "docs/TASKS.md",
+      "line": 3,
+      "tags": [
+        "REQ-001"
+      ],
+      "keywords": [
+        "req-001",
+        "build",
+        "node",
+        "typescript",
+        "check",
+        "commands"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 10,
+          "kind": "explicit-tag",
+          "excerpt": "4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.",
+          "score": 100
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 19,
+          "kind": "explicit-tag",
+          "excerpt": "- Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.",
+          "score": 100
+        },
+        {
+          "file": "README.md",
+          "line": 38,
+          "kind": "explicit-tag",
+          "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
+          "score": 100
+        },
+        {
+          "file": "README.md",
+          "line": 42,
+          "kind": "explicit-tag",
+          "excerpt": "// REQ-001 scan PRD and TASKS documents into requirement records.",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 6,
+          "kind": "explicit-tag",
+          "excerpt": "const requirements = extractRequirements('- REQ-001 The CLI must scan docs.\\n- nice to have', 'docs/PRD.md', 'prd');",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 8,
+          "kind": "explicit-tag",
+          "excerpt": "assert.equal(requirements[0]?.id, 'REQ-001');",
+          "score": 100
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 9,
+          "kind": "explicit-tag",
+          "excerpt": "assert.deepEqual(requirements[0]?.tags, ['REQ-001']);",
+          "score": 100
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/docs/PRD.md",
+          "line": 3,
+          "kind": "explicit-tag",
+          "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "source": "tasks",
+      "text": "REQ-002 Read docs/PRD.md, docs/TASKS.md, README, tests, package scripts, and source comments/headings.",
+      "file": "docs/TASKS.md",
+      "line": 4,
+      "tags": [
+        "REQ-002"
+      ],
+      "keywords": [
+        "req-002",
+        "tasks",
+        "readme",
+        "tests",
+        "package",
+        "scripts",
+        "source",
+        "comments",
+        "headings"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "tests/fixtures/tagged-repo/docs/PRD.md",
+          "line": 4,
+          "kind": "explicit-tag",
+          "excerpt": "- REQ-002 The scanner should emit traceability markdown and JSON reports.",
+          "score": 100
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/docs/TASKS.md",
+          "line": 4,
+          "kind": "explicit-tag",
+          "excerpt": "- [ ] TASK-002 Add report writer for REQ-002.",
+          "score": 100
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/src/index.ts",
+          "line": 4,
+          "kind": "explicit-tag",
+          "excerpt": "// REQ-002 emit markdown and JSON traceability reports.",
+          "score": 100
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/tests/index.test.ts",
+          "line": 2,
+          "kind": "explicit-tag",
+          "excerpt": "// REQ-002 fixture test references report output.",
+          "score": 100
+        },
+        {
+          "file": "docs/TASKS.md",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-002 Read docs/PRD.md, docs/TASKS.md, README, tests, package scripts, and source comments/headings.",
+          "score": 9
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 18,
+          "kind": "keyword",
+          "excerpt": "- `specstitch scan` reads `docs/PRD.md`, `docs/TASKS.md`, README, tests, package scripts, and source headings/comments.",
+          "score": 8
+        },
+        {
+          "file": "docs/orchestration.json",
+          "line": 9,
+          "kind": "keyword",
+          "excerpt": "\"inputs\": [\"docs/PRD.md\", \"docs/TASKS.md\", \"README.md\", \"src\", \"tests\", \"package.json\"],",
+          "score": 4
+        },
+        {
+          "file": "package.json",
+          "line": 4,
+          "kind": "package-script",
+          "excerpt": "\"description\": \"Local-first traceability quilt for PRDs, tasks, docs, tests, and source drift.\",",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "source": "tasks",
+      "text": "REQ-003 Extract tagged and untagged requirement/task bullets deterministically.",
+      "file": "docs/TASKS.md",
+      "line": 5,
+      "tags": [
+        "REQ-003"
+      ],
+      "keywords": [
+        "req-003",
+        "extract",
+        "tagged",
+        "untagged",
+        "requirement",
+        "task",
+        "bullets",
+        "deterministically"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 5,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-003 Extract tagged and untagged requirement/task bullets deterministically.",
+          "score": 8
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 19,
+          "kind": "keyword",
+          "excerpt": "- Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.",
+          "score": 4
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 12,
+          "kind": "keyword",
+          "excerpt": "test('assigns stable ids to untagged requirement-like bullets', () => {",
+          "score": 4
+        },
+        {
+          "file": "README.md",
+          "line": 45,
+          "kind": "keyword",
+          "excerpt": "Untagged bullets are also matched with simple local keyword heuristics.",
+          "score": 3
+        },
+        {
+          "file": "src/extract.ts",
+          "line": 11,
+          "kind": "keyword",
+          "excerpt": "export function extractRequirements(markdown: string, file: string, source: 'prd' | 'tasks'): Requirement[] {",
+          "score": 3
+        },
+        {
+          "file": "src/scan.ts",
+          "line": 25,
+          "kind": "keyword",
+          "excerpt": "...(tasks ? extractRequirements(tasks, tasksPath, 'tasks') : [])",
+          "score": 3
+        },
+        {
+          "file": "tests/extract.test.ts",
+          "line": 5,
+          "kind": "keyword",
+          "excerpt": "test('extracts explicit requirement tags from bullets', () => {",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/untagged-repo/docs/PRD.md",
+          "line": 1,
+          "kind": "heading",
+          "excerpt": "# Untagged Repo PRD",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-004",
+      "source": "tasks",
+      "text": "REQ-004 Match items to files using explicit tags and local keyword heuristics.",
+      "file": "docs/TASKS.md",
+      "line": 6,
+      "tags": [
+        "REQ-004"
+      ],
+      "keywords": [
+        "req-004",
+        "match",
+        "items",
+        "using",
+        "explicit",
+        "tags",
+        "local",
+        "keyword",
+        "heuristics"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 6,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-004 Match items to files using explicit tags and local keyword heuristics.",
+          "score": 9
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 19,
+          "kind": "keyword",
+          "excerpt": "- Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.",
+          "score": 6
+        },
+        {
+          "file": "README.md",
+          "line": 45,
+          "kind": "keyword",
+          "excerpt": "Untagged bullets are also matched with simple local keyword heuristics.",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "source": "tasks",
+      "text": "REQ-005 Emit docs/TRACEABILITY.md and docs/traceability.json from scans.",
+      "file": "docs/TASKS.md",
+      "line": 7,
+      "tags": [
+        "REQ-005"
+      ],
+      "keywords": [
+        "req-005",
+        "emit",
+        "traceability",
+        "json",
+        "scans"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 7,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-005 Emit docs/TRACEABILITY.md and docs/traceability.json from scans.",
+          "score": 5
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 20,
+          "kind": "keyword",
+          "excerpt": "- Emit `docs/TRACEABILITY.md` and JSON with covered/orphan/stale items.",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/docs/PRD.md",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "- REQ-002 The scanner should emit traceability markdown and JSON reports.",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/tagged-repo/src/index.ts",
+          "line": 4,
+          "kind": "keyword",
+          "excerpt": "// REQ-002 emit markdown and JSON traceability reports.",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-006",
+      "source": "tasks",
+      "text": "REQ-006 Make `check` exit non-zero when coverage or stale evidence thresholds fail.",
+      "file": "docs/TASKS.md",
+      "line": 8,
+      "tags": [
+        "REQ-006"
+      ],
+      "keywords": [
+        "req-006",
+        "make",
+        "check",
+        "exit",
+        "non-zero",
+        "when",
+        "coverage",
+        "stale",
+        "evidence",
+        "thresholds",
+        "fail"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 8,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-006 Make `check` exit non-zero when coverage or stale evidence thresholds fail.",
+          "score": 11
+        },
+        {
+          "file": "README.md",
+          "line": 31,
+          "kind": "keyword",
+          "excerpt": "`check` runs the same scan and exits non-zero when coverage is below the threshold or stale tags exceed the maximum.",
+          "score": 6
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 21,
+          "kind": "keyword",
+          "excerpt": "- `specstitch check` exits non-zero on configurable drift thresholds.",
+          "score": 4
+        },
+        {
+          "file": "docs/orchestration.json",
+          "line": 6,
+          "kind": "keyword",
+          "excerpt": "\"check\": \"specstitch check --root . --min-coverage 0.8 --max-stale 0\",",
+          "score": 3
+        },
+        {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 9,
+          "kind": "keyword",
+          "excerpt": "3. Run `specstitch check --min-coverage 0.8 --max-stale 0` in CI or local gates.",
+          "score": 3
+        },
+        {
+          "file": "README.md",
+          "line": 23,
+          "kind": "keyword",
+          "excerpt": "specstitch check --root . --min-coverage 0.8 --max-stale 0",
+          "score": 3
+        },
+        {
+          "file": "src/check.ts",
+          "line": 17,
+          "kind": "keyword",
+          "excerpt": "failures.push(`stale evidence count ${result.summary.stale} is above maximum ${options.maxStale}`);",
+          "score": 3
+        },
+        {
+          "file": "src/cli.ts",
+          "line": 83,
+          "kind": "keyword",
+          "excerpt": "console.log(`specstitch ${VERSION}\\n\\nUsage:\\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-007",
+      "source": "tasks",
+      "text": "REQ-007 Include tagged and untagged fixtures with automated tests and CLI smokes.",
+      "file": "docs/TASKS.md",
+      "line": 9,
+      "tags": [
+        "REQ-007"
+      ],
+      "keywords": [
+        "req-007",
+        "include",
+        "tagged",
+        "untagged",
+        "fixtures",
+        "automated",
+        "tests",
+        "smokes"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 9,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-007 Include tagged and untagged fixtures with automated tests and CLI smokes.",
+          "score": 8
+        },
+        {
+          "file": "tests/check.test.ts",
+          "line": 12,
+          "kind": "keyword",
+          "excerpt": "const result = await scan({ root: path.resolve('tests/fixtures/untagged-repo'), write: false });",
+          "score": 4
+        },
+        {
+          "file": "docs/PRD.md",
+          "line": 22,
+          "kind": "keyword",
+          "excerpt": "- Fixtures for tagged and untagged repos.",
+          "score": 3
+        },
+        {
+          "file": "README.md",
+          "line": 16,
+          "kind": "keyword",
+          "excerpt": "node dist/cli.js scan --root tests/fixtures/tagged-repo",
+          "score": 3
+        },
+        {
+          "file": "tests/check.test.ts",
+          "line": 7,
+          "kind": "keyword",
+          "excerpt": "const checked = await check({ root: path.resolve('tests/fixtures/tagged-repo'), write: false, minCoverage: 1, maxStale: 0 });",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/untagged-repo/docs/PRD.md",
+          "line": 1,
+          "kind": "heading",
+          "excerpt": "# Untagged Repo PRD",
+          "score": 3
+        },
+        {
+          "file": "tests/fixtures/untagged-repo/README.md",
+          "line": 1,
+          "kind": "heading",
+          "excerpt": "# Untagged Fixture",
+          "score": 3
+        },
+        {
+          "file": "tests/scan.test.ts",
+          "line": 6,
+          "kind": "keyword",
+          "excerpt": "const fixtureRoot = path.resolve('tests/fixtures/tagged-repo');",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "id": "REQ-008",
+      "source": "tasks",
+      "text": "REQ-008 Document safety, contributing, examples, and local-first behavior.",
+      "file": "docs/TASKS.md",
+      "line": 10,
+      "tags": [
+        "REQ-008"
+      ],
+      "keywords": [
+        "req-008",
+        "document",
+        "safety",
+        "contributing",
+        "examples",
+        "local-first",
+        "behavior"
+      ],
+      "status": "covered",
+      "evidence": [
+        {
+          "file": "docs/TASKS.md",
+          "line": 10,
+          "kind": "keyword",
+          "excerpt": "- [x] REQ-008 Document safety, contributing, examples, and local-first behavior.",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "STALE-13",
+      "source": "tasks",
+      "text": "Tag appears in evidence but not in PRD/TASKS: 4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.",
+      "file": "docs/ORCHESTRATION.md",
+      "line": 10,
+      "tags": [],
+      "keywords": [],
+      "status": "stale",
+      "evidence": [
+        {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 10,
+          "kind": "explicit-tag",
+          "excerpt": "4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "STALE-14",
+      "source": "tasks",
+      "text": "Tag appears in evidence but not in PRD/TASKS: assert.deepEqual(extractTags('covers req-123 and TASK-999'), ['REQ-123', 'TASK-999']);",
+      "file": "tests/extract.test.ts",
+      "line": 18,
+      "tags": [],
+      "keywords": [],
+      "status": "stale",
+      "evidence": [
+        {
+          "file": "tests/extract.test.ts",
+          "line": 18,
+          "kind": "explicit-tag",
+          "excerpt": "assert.deepEqual(extractTags('covers req-123 and TASK-999'), ['REQ-123', 'TASK-999']);",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "STALE-15",
+      "source": "tasks",
+      "text": "Tag appears in evidence but not in PRD/TASKS: assert.deepEqual(extractTags('covers req-123 and TASK-999'), ['REQ-123', 'TASK-999']);",
+      "file": "tests/extract.test.ts",
+      "line": 18,
+      "tags": [],
+      "keywords": [],
+      "status": "stale",
+      "evidence": [
+        {
+          "file": "tests/extract.test.ts",
+          "line": 18,
+          "kind": "explicit-tag",
+          "excerpt": "assert.deepEqual(extractTags('covers req-123 and TASK-999'), ['REQ-123', 'TASK-999']);",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "STALE-16",
+      "source": "tasks",
+      "text": "Tag appears in evidence but not in PRD/TASKS: - [ ] TASK-001 Implement scan command for REQ-001.",
+      "file": "tests/fixtures/tagged-repo/docs/TASKS.md",
+      "line": 3,
+      "tags": [],
+      "keywords": [],
+      "status": "stale",
+      "evidence": [
+        {
+          "file": "tests/fixtures/tagged-repo/docs/TASKS.md",
+          "line": 3,
+          "kind": "explicit-tag",
+          "excerpt": "- [ ] TASK-001 Implement scan command for REQ-001.",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "id": "STALE-17",
+      "source": "tasks",
+      "text": "Tag appears in evidence but not in PRD/TASKS: - [ ] TASK-002 Add report writer for REQ-002.",
+      "file": "tests/fixtures/tagged-repo/docs/TASKS.md",
+      "line": 4,
+      "tags": [],
+      "keywords": [],
+      "status": "stale",
+      "evidence": [
+        {
+          "file": "tests/fixtures/tagged-repo/docs/TASKS.md",
+          "line": 4,
+          "kind": "explicit-tag",
+          "excerpt": "- [ ] TASK-002 Add report writer for REQ-002.",
+          "score": 100
+        }
+      ]
+    }
+  ],
+  "filesScanned": [
+    "README.md",
+    "docs/ORCHESTRATION.md",
+    "docs/PRD.md",
+    "docs/TASKS.md",
+    "docs/orchestration.json",
+    "package.json",
+    "src/check.ts",
+    "src/cli.ts",
+    "src/extract.ts",
+    "src/fs.ts",
+    "src/index.ts",
+    "src/match.ts",
+    "src/report.ts",
+    "src/scan.ts",
+    "src/types.ts",
+    "tests/check.test.ts",
+    "tests/extract.test.ts",
+    "tests/fixtures/tagged-repo/README.md",
+    "tests/fixtures/tagged-repo/docs/PRD.md",
+    "tests/fixtures/tagged-repo/docs/TASKS.md",
+    "tests/fixtures/tagged-repo/package.json",
+    "tests/fixtures/tagged-repo/src/index.ts",
+    "tests/fixtures/tagged-repo/tests/index.test.ts",
+    "tests/fixtures/untagged-repo/README.md",
+    "tests/fixtures/untagged-repo/docs/PRD.md",
+    "tests/fixtures/untagged-repo/docs/TASKS.md",
+    "tests/fixtures/untagged-repo/package.json",
+    "tests/fixtures/untagged-repo/src/index.ts",
+    "tests/scan.test.ts"
+  ]
+}
