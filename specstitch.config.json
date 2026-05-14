@@ -1,0 +1,8 @@
+{
+  "prdPath": "docs/PRD.md",
+  "tasksPath": "docs/TASKS.md",
+  "outMarkdown": "docs/TRACEABILITY.md",
+  "outJson": "docs/traceability.json",
+  "minCoverage": 0.8,
+  "maxStale": 10
+}
