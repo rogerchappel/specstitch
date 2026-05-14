@@ -1,0 +1,16 @@
+{
+  "name": "specstitch",
+  "version": 1,
+  "commands": {
+    "scan": "specstitch scan --root .",
+    "check": "specstitch check --root . --min-coverage 0.8 --max-stale 0",
+    "smoke": "npm run smoke"
+  },
+  "inputs": ["docs/PRD.md", "docs/TASKS.md", "README.md", "src", "tests", "package.json"],
+  "outputs": ["docs/TRACEABILITY.md", "docs/traceability.json"],
+  "policy": {
+    "network": false,
+    "localFirst": true,
+    "deterministic": true
+  }
+}
