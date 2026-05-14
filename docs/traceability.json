@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-14T08:41:41.348Z",
+  "generatedAt": "2026-05-14T08:44:52.085Z",
   "root": "/Users/roger/Developer/my-opensource/specstitch",
   "summary": {
     "total": 12,
@@ -129,14 +129,14 @@
         },
         {
           "file": "README.md",
-          "line": 38,
+          "line": 55,
           "kind": "explicit-tag",
           "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
           "score": 100
         },
         {
           "file": "README.md",
-          "line": 42,
+          "line": 59,
           "kind": "explicit-tag",
           "excerpt": "// REQ-001 scan PRD and TASKS documents into requirement records.",
           "score": 100
@@ -212,14 +212,14 @@
         },
         {
           "file": "src/cli.ts",
-          "line": 83,
+          "line": 85,
           "kind": "keyword",
           "excerpt": "console.log(`specstitch ${VERSION}\\n\\nUsage:\\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st",
           "score": 3
         },
         {
           "file": "src/cli.ts",
-          "line": 86,
+          "line": 89,
           "kind": "keyword",
           "excerpt": "function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {",
           "score": 3
@@ -273,6 +273,13 @@
           "score": 7
         },
         {
+          "file": "docs/ORCHESTRATION.md",
+          "line": 26,
+          "kind": "keyword",
+          "excerpt": "Repositories can commit `specstitch.config.json` so humans, agents, and CI all share the same PRD/TASKS paths and drift thresholds. Use CLI flags only for one-off stricter checks.",
+          "score": 4
+        },
+        {
           "file": "docs/TASKS.md",
           "line": 8,
           "kind": "keyword",
@@ -323,14 +330,14 @@
         },
         {
           "file": "README.md",
-          "line": 38,
+          "line": 55,
           "kind": "explicit-tag",
           "excerpt": "- REQ-001 The CLI must scan PRD and TASKS markdown files.",
           "score": 100
         },
         {
           "file": "README.md",
-          "line": 42,
+          "line": 59,
           "kind": "explicit-tag",
           "excerpt": "// REQ-001 scan PRD and TASKS documents into requirement records.",
           "score": 100
@@ -489,7 +496,7 @@
         },
         {
           "file": "README.md",
-          "line": 45,
+          "line": 62,
           "kind": "keyword",
           "excerpt": "Untagged bullets are also matched with simple local keyword heuristics.",
           "score": 3
@@ -562,7 +569,7 @@
         },
         {
           "file": "README.md",
-          "line": 45,
+          "line": 62,
           "kind": "keyword",
           "excerpt": "Untagged bullets are also matched with simple local keyword heuristics.",
           "score": 4
@@ -692,7 +699,7 @@
         },
         {
           "file": "src/cli.ts",
-          "line": 83,
+          "line": 85,
           "kind": "keyword",
           "excerpt": "console.log(`specstitch ${VERSION}\\n\\nUsage:\\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st",
           "score": 3
@@ -912,6 +919,7 @@
     "package.json",
     "src/check.ts",
     "src/cli.ts",
+    "src/config.ts",
     "src/extract.ts",
     "src/fs.ts",
     "src/index.ts",
@@ -920,6 +928,7 @@
     "src/scan.ts",
     "src/types.ts",
     "tests/check.test.ts",
+    "tests/config.test.ts",
     "tests/extract.test.ts",
     "tests/fixtures/tagged-repo/README.md",
     "tests/fixtures/tagged-repo/docs/PRD.md",

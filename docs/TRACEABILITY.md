@@ -1,6 +1,6 @@
 # Traceability Quilt
 
-Generated: 2026-05-14T08:41:41.348Z
+Generated: 2026-05-14T08:44:52.085Z
 
 ## Summary
 
@@ -35,8 +35,8 @@ Generated: 2026-05-14T08:41:41.348Z
 - Evidence:
   - docs/ORCHESTRATION.md:10 (explicit-tag, score 100) — 4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.
   - docs/TASKS.md:3 (explicit-tag, score 100) — - [x] REQ-001 Build a Node/TypeScript CLI with `scan` and `check` commands.
-  - README.md:38 (explicit-tag, score 100) — - REQ-001 The CLI must scan PRD and TASKS markdown files.
-  - README.md:42 (explicit-tag, score 100) — // REQ-001 scan PRD and TASKS documents into requirement records.
+  - README.md:55 (explicit-tag, score 100) — - REQ-001 The CLI must scan PRD and TASKS markdown files.
+  - README.md:59 (explicit-tag, score 100) — // REQ-001 scan PRD and TASKS documents into requirement records.
   - tests/extract.test.ts:6 (explicit-tag, score 100) — const requirements = extractRequirements('- REQ-001 The CLI must scan docs.\n- nice to have', 'docs/PRD.md', 'prd');
   - tests/extract.test.ts:8 (explicit-tag, score 100) — assert.equal(requirements[0]?.id, 'REQ-001');
   - tests/extract.test.ts:9 (explicit-tag, score 100) — assert.deepEqual(requirements[0]?.tags, ['REQ-001']);
@@ -51,8 +51,8 @@ Generated: 2026-05-14T08:41:41.348Z
   - docs/PRD.md:20 (keyword, score 7) — - Emit `docs/TRACEABILITY.md` and JSON with covered/orphan/stale items.
   - docs/ORCHESTRATION.md:8 (keyword, score 3) — 2. Review `docs/TRACEABILITY.md` for orphan requirements and stale tags.
   - docs/TASKS.md:7 (keyword, score 3) — - [x] REQ-005 Emit docs/TRACEABILITY.md and docs/traceability.json from scans.
-  - src/cli.ts:83 (keyword, score 3) — console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st
-  - src/cli.ts:86 (keyword, score 3) — function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {
+  - src/cli.ts:85 (keyword, score 3) — console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st
+  - src/cli.ts:89 (keyword, score 3) — function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {
   - src/types.ts:1 (keyword, score 3) — export type StitchStatus = 'covered' | 'orphan' | 'stale';
   - tests/fixtures/tagged-repo/docs/PRD.md:4 (keyword, score 3) — - REQ-002 The scanner should emit traceability markdown and JSON reports.
   - tests/fixtures/tagged-repo/src/index.ts:4 (keyword, score 3) — // REQ-002 emit markdown and JSON traceability reports.
@@ -64,6 +64,7 @@ Generated: 2026-05-14T08:41:41.348Z
 - Status: covered
 - Evidence:
   - docs/PRD.md:21 (keyword, score 7) — - `specstitch check` exits non-zero on configurable drift thresholds.
+  - docs/ORCHESTRATION.md:26 (keyword, score 4) — Repositories can commit `specstitch.config.json` so humans, agents, and CI all share the same PRD/TASKS paths and drift thresholds. Use CLI flags only for one-off stricter checks.
   - docs/TASKS.md:8 (keyword, score 3) — - [x] REQ-006 Make `check` exit non-zero when coverage or stale evidence thresholds fail.
   - README.md:31 (keyword, score 3) — `check` runs the same scan and exits non-zero when coverage is below the threshold or stale tags exceed the maximum.
 
@@ -75,8 +76,8 @@ Generated: 2026-05-14T08:41:41.348Z
 - Evidence:
   - docs/ORCHESTRATION.md:10 (explicit-tag, score 100) — 4. Prefer explicit `REQ-001` / `TASK-001` tags when a requirement is important.
   - docs/PRD.md:19 (explicit-tag, score 100) — - Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.
-  - README.md:38 (explicit-tag, score 100) — - REQ-001 The CLI must scan PRD and TASKS markdown files.
-  - README.md:42 (explicit-tag, score 100) — // REQ-001 scan PRD and TASKS documents into requirement records.
+  - README.md:55 (explicit-tag, score 100) — - REQ-001 The CLI must scan PRD and TASKS markdown files.
+  - README.md:59 (explicit-tag, score 100) — // REQ-001 scan PRD and TASKS documents into requirement records.
   - tests/extract.test.ts:6 (explicit-tag, score 100) — const requirements = extractRequirements('- REQ-001 The CLI must scan docs.\n- nice to have', 'docs/PRD.md', 'prd');
   - tests/extract.test.ts:8 (explicit-tag, score 100) — assert.equal(requirements[0]?.id, 'REQ-001');
   - tests/extract.test.ts:9 (explicit-tag, score 100) — assert.deepEqual(requirements[0]?.tags, ['REQ-001']);
@@ -106,7 +107,7 @@ Generated: 2026-05-14T08:41:41.348Z
   - docs/TASKS.md:5 (keyword, score 8) — - [x] REQ-003 Extract tagged and untagged requirement/task bullets deterministically.
   - docs/PRD.md:19 (keyword, score 4) — - Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.
   - tests/extract.test.ts:12 (keyword, score 4) — test('assigns stable ids to untagged requirement-like bullets', () => {
-  - README.md:45 (keyword, score 3) — Untagged bullets are also matched with simple local keyword heuristics.
+  - README.md:62 (keyword, score 3) — Untagged bullets are also matched with simple local keyword heuristics.
   - src/extract.ts:11 (keyword, score 3) — export function extractRequirements(markdown: string, file: string, source: 'prd' | 'tasks'): Requirement[] {
   - src/scan.ts:25 (keyword, score 3) — ...(tasks ? extractRequirements(tasks, tasksPath, 'tasks') : [])
   - tests/extract.test.ts:5 (keyword, score 3) — test('extracts explicit requirement tags from bullets', () => {
@@ -120,7 +121,7 @@ Generated: 2026-05-14T08:41:41.348Z
 - Evidence:
   - docs/TASKS.md:6 (keyword, score 9) — - [x] REQ-004 Match items to files using explicit tags and local keyword heuristics.
   - docs/PRD.md:19 (keyword, score 6) — - Extract requirement/task bullets and match to files using explicit tags (`REQ-001`) and fuzzy local heuristics.
-  - README.md:45 (keyword, score 4) — Untagged bullets are also matched with simple local keyword heuristics.
+  - README.md:62 (keyword, score 4) — Untagged bullets are also matched with simple local keyword heuristics.
 
 ### ✅ REQ-005
 
@@ -146,7 +147,7 @@ Generated: 2026-05-14T08:41:41.348Z
   - docs/ORCHESTRATION.md:9 (keyword, score 3) — 3. Run `specstitch check --min-coverage 0.8 --max-stale 0` in CI or local gates.
   - README.md:23 (keyword, score 3) — specstitch check --root . --min-coverage 0.8 --max-stale 0
   - src/check.ts:17 (keyword, score 3) — failures.push(`stale evidence count ${result.summary.stale} is above maximum ${options.maxStale}`);
-  - src/cli.ts:83 (keyword, score 3) — console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st
+  - src/cli.ts:85 (keyword, score 3) — console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-st
 
 ### ✅ REQ-007
 
@@ -221,6 +222,7 @@ Generated: 2026-05-14T08:41:41.348Z
 - package.json
 - src/check.ts
 - src/cli.ts
+- src/config.ts
 - src/extract.ts
 - src/fs.ts
 - src/index.ts
@@ -229,6 +231,7 @@ Generated: 2026-05-14T08:41:41.348Z
 - src/scan.ts
 - src/types.ts
 - tests/check.test.ts
+- tests/config.test.ts
 - tests/extract.test.ts
 - tests/fixtures/tagged-repo/README.md
 - tests/fixtures/tagged-repo/docs/PRD.md

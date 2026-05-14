@@ -12,6 +12,7 @@ export const DEFAULT_INCLUDE = [
 ];
 
 const SKIP_DIRS = new Set(['.git', 'node_modules', 'dist', 'coverage', '.next', '.turbo']);
+const SKIP_FILES = new Set(['docs/TRACEABILITY.md', 'docs/traceability.json']);
 const TEXT_EXTENSIONS = new Set(['.md', '.mdx', '.ts', '.tsx', '.js', '.jsx', '.json', '.mjs', '.cjs', '.yml', '.yaml']);
 
 export async function readTextIfExists(filePath: string): Promise<string | undefined> {
@@ -35,7 +36,7 @@ export async function listCandidateFiles(root: string): Promise<string[]> {
       if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
     }
   }
-  return [...new Set(found)].sort();
+  return [...new Set(found)].filter((file) => !SKIP_FILES.has(file)).sort();
 }
 
 async function walk(directory: string, root: string, found: string[]): Promise<void> {
