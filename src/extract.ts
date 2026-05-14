@@ -5,7 +5,7 @@ const TAG_PATTERN = /\b(?:REQ|TASK)-\d{3,}\b/gi;
 const BULLET_PATTERN = /^\s*(?:[-*+]\s+|\d+[.)]\s+|#+\s+)(.+?)\s*$/;
 const STOP_WORDS = new Set([
   'the', 'and', 'for', 'with', 'that', 'this', 'from', 'into', 'then', 'than', 'must', 'should',
-  'will', 'shall', 'can', 'able', 'read', 'scan', 'emit', 'file', 'files', 'docs', 'code'
+  'will', 'shall', 'can', 'able', 'read', 'scan', 'file', 'files', 'docs', 'code'
 ]);
 
 export function extractRequirements(markdown: string, file: string, source: 'prd' | 'tasks'): Requirement[] {
