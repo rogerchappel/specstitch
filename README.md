@@ -80,3 +80,13 @@ bash scripts/validate.sh
 ## License
 
 MIT
+
+## Development
+
+Run the same checks locally before opening a PR:
+
+- `npm run check` - tsc --noEmit
+- `npm run build` - tsc
+- `npm test` - npm run build && node --test dist/**/*.test.js
+- `npm run smoke` - npm run build && bash scripts/smoke.sh
+- `npm run release:check` - npm test && npm run check && npm run build && npm run smoke && npm pack --dry-run
