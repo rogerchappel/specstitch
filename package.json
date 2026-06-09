@@ -39,5 +39,13 @@
   "devDependencies": {
     "@types/node": "^22.15.0",
     "typescript": "^5.8.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogerchappel/specstitch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogerchappel/specstitch/issues"
+  },
+  "homepage": "https://github.com/rogerchappel/specstitch#readme"
 }
