@@ -90,3 +90,11 @@ Run the same checks locally before opening a PR:
 - `npm test` - npm run build && node --test dist/**/*.test.js
 - `npm run smoke` - npm run build && bash scripts/smoke.sh
 - `npm run release:check` - npm test && npm run check && npm run build && npm run smoke && npm run package:smoke
+
+## Release readiness
+
+Release automation is review-gated. Pull requests that touch release metadata run
+the ReleaseBox dry-run workflow, which checks `releasebox.config.json`, runs
+`npm run release:check`, and previews release notes. Tag pushes can create a
+GitHub release with the packed tarball attached, but npm publishing and Homebrew
+updates remain disabled until they are explicitly enabled.
