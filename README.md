@@ -65,6 +65,10 @@ Untagged bullets are also matched with simple local keyword heuristics.
 
 specstitch is offline by design. It reads local text files and writes local reports only. It does not call external APIs, upload source, or mutate code.
 
+## Agent Skill
+
+See [SKILL.md](SKILL.md) for when an agent should use `specstitch`, which report writes require approval, and how to validate traceability evidence before a release-candidate PR.
+
 ## Contributing
 
 Please keep changes deterministic and fixture-backed. Add or update tests under `tests/fixtures` when matching behavior changes.
