@@ -18,3 +18,10 @@ test('scan includes generated requirement evidence details', async () => {
   assert.ok(req);
   assert.ok(req.evidence.some((item) => item.file === 'src/index.ts'));
 });
+
+test('scan ignores stale tags on explicitly ignored evidence lines', async () => {
+  const result = await scan({ root: path.resolve('tests/fixtures/ignored-tags-repo'), write: false });
+  assert.equal(result.summary.stale, 0);
+  assert.equal(result.requirements.some((item) => item.status === 'stale'), false);
+  assert.ok(result.requirements.find((item) => item.id === 'REQ-101')?.evidence.some((item) => item.file === 'src/index.ts'));
+});

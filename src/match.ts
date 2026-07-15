@@ -6,6 +6,8 @@ export type Document = {
   text: string;
 };
 
+const IGNORE_MARKER = 'specstitch-ignore';
+
 export function stitchRequirements(requirements: Requirement[], documents: Document[]): StitchedRequirement[] {
   return requirements.map((requirement) => {
     const evidence = findEvidence(requirement, documents);
@@ -19,6 +21,7 @@ export function findStaleEvidence(requirements: Requirement[], documents: Docume
   const stale: Evidence[] = [];
   for (const document of documents) {
     document.text.split(/\r?\n/).forEach((line, index) => {
+      if (isIgnoredLine(line)) return;
       for (const tag of extractTags(line)) {
         if (!knownTags.has(tag)) {
           stale.push({ file: document.file, line: index + 1, kind: 'explicit-tag', excerpt: line.trim(), score: 100 });
@@ -34,6 +37,7 @@ function findEvidence(requirement: Requirement, documents: Document[]): Evidence
   for (const document of documents) {
     const lines = document.text.split(/\r?\n/);
     lines.forEach((line, index) => {
+      if (isIgnoredLine(line)) return;
       const explicit = requirement.tags.some((tag) => line.toUpperCase().includes(tag));
       if (explicit && !isSourceLine(requirement, document.file, index + 1)) {
         evidence.push(toEvidence(document.file, index + 1, 'explicit-tag', line, 100));
@@ -49,6 +53,10 @@ function findEvidence(requirement: Requirement, documents: Document[]): Evidence
     .sort((a, b) => b.score - a.score || a.file.localeCompare(b.file) || a.line - b.line)
     .filter((item, index, all) => index === all.findIndex((other) => other.file === item.file && other.line === item.line))
     .slice(0, 8);
+}
+
+export function isIgnoredLine(line: string): boolean {
+  return line.toLowerCase().includes(IGNORE_MARKER);
 }
 
 function keywordScore(keywords: string[], line: string): number {

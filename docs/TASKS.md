@@ -8,3 +8,4 @@
 - [x] REQ-006 Make `check` exit non-zero when coverage or stale evidence thresholds fail.
 - [x] REQ-007 Include tagged and untagged fixtures with automated tests and CLI smokes.
 - [x] REQ-008 Document safety, contributing, examples, and local-first behavior.
+- [x] REQ-009 Support explicit same-line stale-tag ignores for generated examples.
