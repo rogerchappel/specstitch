@@ -31,6 +31,7 @@ Use this skill when an agent needs to prove that project requirements, task list
 
 - Ask before overwriting checked-in traceability reports if the workspace has unrelated user changes.
 - Ask before changing coverage thresholds or suppressing stale requirements.
+- Treat `specstitch-ignore` on a tagged line as an intentional local suppression; do not add it broadly without reviewer context.
 - Ask before running broad formatting, dependency, or release commands.
 
 ## Workflow
@@ -88,4 +89,3 @@ npm run build
 npm run smoke
 npm run package:smoke
 ```
-

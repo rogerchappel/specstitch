@@ -30,6 +30,12 @@ specstitch check --root . --min-coverage 0.8 --max-stale 0
 
 `check` runs the same scan and exits non-zero when coverage is below the threshold or stale tags exceed the maximum.
 
+When a generated line or quoted example intentionally contains a requirement tag that should not count as evidence, add `specstitch-ignore` on that same line:
+
+```ts
+export const generatedNote = 'REQ-999'; // specstitch-ignore generated example
+```
+
 ## Configuration
 
 Create `specstitch.config.json` to set default paths and thresholds:
