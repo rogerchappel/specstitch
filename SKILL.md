@@ -71,6 +71,11 @@ Tagged evidence:
 // REQ-001 scan PRD and TASKS documents into requirement records.
 ```
 
+The configured PRD and TASKS files are requirement sources, not evidence.
+Repeating a tag across those files produces one requirement record and does
+not satisfy coverage. Put genuine evidence in README documentation,
+`package.json`, source, or tests.
+
 Release check:
 
 ```bash
