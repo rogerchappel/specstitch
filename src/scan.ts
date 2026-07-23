@@ -20,12 +20,14 @@ export async function scan(options: ScanOptions): Promise<ScanResult> {
 
   const prd = await readTextIfExists(path.join(root, prdPath));
   const tasks = await readTextIfExists(path.join(root, tasksPath));
-  const requirements = [
+  const requirements = dedupeTaggedRequirements([
     ...(prd ? extractRequirements(prd, prdPath, 'prd') : []),
     ...(tasks ? extractRequirements(tasks, tasksPath, 'tasks') : [])
-  ];
-  const stitched = stitchRequirements(requirements, documents);
-  const staleEvidence = findStaleEvidence(requirements, documents);
+  ]);
+  const sourcePaths = new Set([path.normalize(prdPath), path.normalize(tasksPath)]);
+  const evidenceDocuments = documents.filter((document) => !sourcePaths.has(path.normalize(document.file)));
+  const stitched = stitchRequirements(requirements, evidenceDocuments);
+  const staleEvidence = findStaleEvidence(requirements, evidenceDocuments);
   for (const stale of staleEvidence) {
     stitched.push({
       id: `STALE-${stitched.length + 1}`,
@@ -50,6 +52,16 @@ export async function scan(options: ScanOptions): Promise<ScanResult> {
 
   if (options.write !== false) await writeReports(root, result, options);
   return result;
+}
+
+function dedupeTaggedRequirements(requirements: ReturnType<typeof extractRequirements>) {
+  const seenTags = new Set<string>();
+  return requirements.filter((requirement) => {
+    if (requirement.tags.length === 0) return true;
+    const duplicate = requirement.tags.some((tag) => seenTags.has(tag));
+    requirement.tags.forEach((tag) => seenTags.add(tag));
+    return !duplicate;
+  });
 }
 
 export async function writeReports(root: string, result: ScanResult, options: ScanOptions): Promise<void> {
