@@ -25,3 +25,32 @@ test('scan ignores stale tags on explicitly ignored evidence lines', async () =>
   assert.equal(result.requirements.some((item) => item.status === 'stale'), false);
   assert.ok(result.requirements.find((item) => item.id === 'REQ-101')?.evidence.some((item) => item.file === 'src/index.ts'));
 });
+
+test('requirement declarations in PRD and TASKS do not evidence one another', async () => {
+  const result = await scan({ root: path.resolve('tests/fixtures/cross-source-only'), write: false });
+
+  assert.deepEqual(result.summary, {
+    total: 1,
+    covered: 0,
+    orphan: 1,
+    stale: 0,
+    coverage: 0
+  });
+  assert.equal(result.requirements[0]?.id, 'REQ-900');
+  assert.deepEqual(result.requirements[0]?.evidence, []);
+});
+
+test('a repeated requirement tag remains covered by implementation evidence', async () => {
+  const result = await scan({ root: path.resolve('tests/fixtures/cross-source-backed'), write: false });
+
+  assert.deepEqual(result.summary, {
+    total: 1,
+    covered: 1,
+    orphan: 0,
+    stale: 0,
+    coverage: 1
+  });
+  assert.deepEqual(result.requirements[0]?.evidence.map(({ file, line }) => ({ file, line })), [
+    { file: 'src/widgets.ts', line: 1 }
+  ]);
+});
