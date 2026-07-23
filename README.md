@@ -65,6 +65,11 @@ Tagged evidence works best:
 // REQ-001 scan PRD and TASKS documents into requirement records.
 ```
 
+The configured PRD and TASKS files declare requirements; they do not count as
+evidence for one another. When the same explicit tag appears in both, it is
+reported once. Evidence must come from another scanned location such as
+README documentation, `package.json`, source, or tests.
+
 Untagged bullets are also matched with simple local keyword heuristics.
 
 ## Safety
