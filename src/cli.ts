@@ -10,12 +10,12 @@ type Parsed = { command: string; options: Record<string, string | boolean> };
 
 async function main(argv: string[]): Promise<number> {
   const parsed = parse(argv);
-  if (parsed.options.help || parsed.command === 'help' || !parsed.command) {
-    printHelp();
-    return 0;
-  }
   if (parsed.options.version) {
     console.log(VERSION);
+    return 0;
+  }
+  if (parsed.options.help || parsed.command === 'help' || !parsed.command) {
+    printHelp();
     return 0;
   }
 
@@ -60,7 +60,11 @@ async function main(argv: string[]): Promise<number> {
 }
 
 function parse(argv: string[]): Parsed {
-  const [command = '', ...rest] = argv;
+  let [command = '', ...rest] = argv;
+  if (command === '--help' || command === '--version') {
+    rest = argv;
+    command = '';
+  }
   const options: Record<string, string | boolean> = {};
   for (let i = 0; i < rest.length; i += 1) {
     const arg = rest[i] ?? '';
@@ -82,8 +86,7 @@ function parse(argv: string[]): Parsed {
 }
 
 function printHelp(): void {
-  console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch scan [--root .] [--prd docs/PRD.md] [--tasks docs/TASKS.md]\n  specstitch check [--root .] [--min-coverage 0.8] [--max-stale 0]\n\nOptions:\n  --markdown <path>       Markdown output path (default docs/TRACEABILITY.md)\n  --json <path>           JSON output path (default docs/traceability.json)\n  --config <path>         Config file path (default specstitch.config.json)
-  --no-write              Analyze without writing reports\n  --help                  Show help\n  --version               Show version`);
+  console.log(`specstitch ${VERSION}\n\nUsage:\n  specstitch --help\n  specstitch --version\n  specstitch scan [options]\n  specstitch check [options]\n\nCommand options:\n  --root <path>           Repository root (default current directory)\n  --prd <path>            PRD path\n  --tasks <path>          Tasks path\n  --markdown <path>       Markdown output path (default docs/TRACEABILITY.md)\n  --json <path>           JSON output path (default docs/traceability.json)\n  --config <path>         Config file path (default specstitch.config.json)\n  --no-write              Analyze without writing reports\n  --min-coverage <number> Minimum coverage for check (default 0.8)\n  --max-stale <number>    Maximum stale requirements for check (default 0)\n  --help                  Show help\n  --version               Show version`);
 }
 
 function printSummary(summary: { total: number; covered: number; orphan: number; stale: number; coverage: number }): void {
