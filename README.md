@@ -13,7 +13,7 @@ Or run from a checkout:
 ```bash
 npm install
 npm run build
-node dist/cli.js scan --root tests/fixtures/tagged-repo
+node dist/src/cli.js scan --root tests/fixtures/tagged-repo
 ```
 
 ## Usage

@@ -11,7 +11,7 @@
     ".": "./dist/src/index.js"
   },
   "files": [
-    "dist",
+    "dist/src",
     "docs",
     "SKILL.md",
     "README.md",
@@ -26,7 +26,7 @@
     "test": "npm run build && node --test dist/**/*.test.js",
     "smoke": "npm run build && bash scripts/smoke.sh",
     "release:check": "npm test && npm run check && npm run build && npm run smoke && npm run package:smoke",
-    "package:smoke": "npm pack --dry-run"
+    "package:smoke": "npm run build && bash scripts/package-smoke.sh"
   },
   "keywords": [
     "traceability",
