@@ -110,6 +110,8 @@ Run the same checks locally before opening a PR:
 
 Release automation is review-gated. Pull requests that touch release metadata run
 the ReleaseBox dry-run workflow, which checks `releasebox.config.json`, runs
-`npm run release:check`, and previews release notes. Tag pushes can create a
-GitHub release with the packed tarball attached, but npm publishing and Homebrew
+`npm run release:check`, validates the versioned npm artifact without publishing,
+and previews release notes. A `v<version>` tag must exactly match `package.json`.
+The tag workflow publishes that one tarball to npm with provenance before creating
+the GitHub release and attaching the same artifact. Homebrew
 updates remain disabled until they are explicitly enabled.

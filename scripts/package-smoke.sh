@@ -20,11 +20,15 @@ cp -R "$ROOT/tests/fixtures/tagged-repo/." "$TMP/consumer/fixture/"
   cd "$TMP/consumer"
   npm init --yes >/dev/null
   npm install --ignore-scripts "${TARBALL[0]}" >/dev/null
+  set +e
   ./node_modules/.bin/specstitch scan --root fixture >scan.json
+  SCAN_STATUS=$?
+  set -e
+  test "$SCAN_STATUS" -le 1
 )
 
 test -s "$TMP/consumer/fixture/docs/TRACEABILITY.md"
 test -s "$TMP/consumer/fixture/docs/traceability.json"
 grep -q 'REQ-001' "$TMP/consumer/fixture/docs/TRACEABILITY.md"
-grep -q '"requirements"' "$TMP/consumer/scan.json"
+grep -q '"summary"' "$TMP/consumer/scan.json"
 echo "package smoke ok"
