@@ -40,6 +40,8 @@ jobs:
       - name: Validate tag and build release artifact
         id: package
         run: npm run release:prepare -- --tag "${GITHUB_REF_NAME}"
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.5.1
       - name: Publish exact artifact to npm
         run: npm publish "${{ steps.package.outputs.artifact }}" --provenance --access public
       - name: Generate release notes
