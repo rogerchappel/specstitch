@@ -7,6 +7,8 @@ on:
       - releasebox.config.json
       - package.json
       - package-lock.json
+      - scripts/prepare-release.mjs
+      - tests/release.test.ts
       - .github/workflows/release*.yml
 
 permissions:
@@ -39,6 +41,8 @@ jobs:
         run: node /tmp/releasebox/bin/releasebox.js check .
       - name: Run release checks
         run: npm run release:check
+      - name: Validate release artifact without publishing
+        run: npm run release:prepare -- --tag "v$(node -p "require('./package.json').version")"
       - name: Release notes preview
         run: |
           node /tmp/releasebox/bin/releasebox.js notes . > release-notes-preview.md
