@@ -53,6 +53,10 @@ Create `specstitch.config.json` to set default paths and thresholds:
 
 CLI flags override config values.
 
+`minCoverage` and `--min-coverage` accept finite numbers from `0` through `1`,
+inclusive. `maxStale` and `--max-stale` accept non-negative integers. Invalid or
+missing CLI values produce a usage error instead of falling back to defaults.
+
 ## Examples
 
 Tagged evidence works best:
