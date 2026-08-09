@@ -21,6 +21,17 @@ async function main(argv: string[]): Promise<number> {
 
   const root = path.resolve(String(parsed.options.root ?? process.cwd()));
   const config = await loadConfig(root, stringOption(parsed.options.config));
+  let thresholds: { minCoverage: number; maxStale: number };
+  try {
+    thresholds = {
+      minCoverage: thresholdOption(parsed.options['min-coverage'], config.minCoverage ?? 0.8, '--min-coverage', (value) => value <= 1, 'a finite number between 0 and 1'),
+      maxStale: thresholdOption(parsed.options['max-stale'], config.maxStale ?? 0, '--max-stale', Number.isSafeInteger, 'a non-negative integer')
+    };
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    printHelp();
+    return 2;
+  }
   if (parsed.command === 'scan') {
     const result = await scan({
       root,
@@ -42,8 +53,8 @@ async function main(argv: string[]): Promise<number> {
       outMarkdown: stringOption(parsed.options.markdown) ?? config.outMarkdown,
       outJson: stringOption(parsed.options.json) ?? config.outJson,
       write: parsed.options.write !== false,
-      minCoverage: numberOption(parsed.options['min-coverage'], config.minCoverage ?? 0.8),
-      maxStale: numberOption(parsed.options['max-stale'], config.maxStale ?? 0)
+      minCoverage: thresholds.minCoverage,
+      maxStale: thresholds.maxStale
     });
     printSummary(checked.result.summary);
     if (!checked.ok) {
@@ -97,10 +108,12 @@ function stringOption(value: string | boolean | undefined): string | undefined {
   return typeof value === 'string' ? value : undefined;
 }
 
-function numberOption(value: string | boolean | undefined, fallback: number): number {
-  if (typeof value !== 'string') return fallback;
+function thresholdOption(value: string | boolean | undefined, fallback: number, name: string, valid: (value: number) => boolean, requirement: string): number {
+  if (value === undefined) return fallback;
+  if (typeof value !== 'string') throw new Error(`${name} requires a value (${requirement})`);
   const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
+  if (!Number.isFinite(parsed) || parsed < 0 || !valid(parsed)) throw new Error(`${name} must be ${requirement}; received ${JSON.stringify(value)}`);
+  return parsed;
 }
 
 main(process.argv.slice(2)).then((code) => {

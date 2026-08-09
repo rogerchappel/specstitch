@@ -20,8 +20,8 @@ export async function loadConfig(root: string, configPath = 'specstitch.config.j
     tasksPath: stringValue(parsed.tasksPath),
     outMarkdown: stringValue(parsed.outMarkdown),
     outJson: stringValue(parsed.outJson),
-    minCoverage: numberValue(parsed.minCoverage),
-    maxStale: numberValue(parsed.maxStale)
+    minCoverage: thresholdValue(parsed.minCoverage, 'minCoverage', (value) => value <= 1, 'a finite number between 0 and 1'),
+    maxStale: thresholdValue(parsed.maxStale, 'maxStale', Number.isSafeInteger, 'a non-negative integer')
   };
 }
 
@@ -33,6 +33,10 @@ function stringValue(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() ? value : undefined;
 }
 
-function numberValue(value: unknown): number | undefined {
-  return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+function thresholdValue(value: unknown, name: string, valid: (value: number) => boolean, requirement: string): number | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || !valid(value)) {
+    throw new Error(`config ${name} must be ${requirement}`);
+  }
+  return value;
 }
