@@ -4,17 +4,19 @@ A tiny local-first CLI that stitches PRDs, task lists, docs, tests, and source c
 
 ## Install
 
-```bash
-npm install -g specstitch
-```
-
-Or run from a checkout:
+specstitch has not been published to the npm registry yet, so install and run it
+from a source checkout for now:
 
 ```bash
+git clone https://github.com/rogerchappel/specstitch.git
+cd specstitch
 npm install
 npm run build
 node dist/src/cli.js scan --root tests/fixtures/tagged-repo
 ```
+
+The global `npm install -g specstitch` command will become available only after
+the first npm release is published.
 
 ## Usage
 
