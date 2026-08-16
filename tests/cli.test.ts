@@ -47,6 +47,45 @@ test('scan command still accepts options and succeeds', () => {
   assert.match(result.stdout, /"ok": true/);
 });
 
+test('commands reject unknown options and unexpected positional arguments', () => {
+  for (const args of [
+    ['check', '--root', fixturePath, '--min-coverge', '1', '--no-write'],
+    ['scan', '--root', fixturePath, 'unexpected', '--no-write']
+  ]) {
+    const result = runCli(...args);
+    assert.equal(result.status, 2, args.join(' '));
+    assert.match(result.stderr, /Unknown option: --min-coverge|Unexpected argument: unexpected/);
+    assert.match(result.stdout, /Usage:/);
+  }
+});
+
+test('value-taking options reject missing values', () => {
+  for (const flag of ['--root', '--config', '--prd', '--tasks', '--markdown', '--json']) {
+    const result = runCli('scan', flag, '--no-write');
+    assert.equal(result.status, 2, flag);
+    assert.equal(result.stderr, `${flag} requires a value\n`);
+    assert.match(result.stdout, /Usage:/);
+  }
+});
+
+test('representative value and boolean options remain accepted', () => {
+  const result = runCli(
+    'check',
+    '--root', fixturePath,
+    '--prd', 'docs/PRD.md',
+    '--tasks', 'docs/TASKS.md',
+    '--markdown', 'docs/TRACEABILITY.md',
+    '--json', 'docs/traceability.json',
+    '--min-coverage', '0',
+    '--max-stale', '0',
+    '--no-write'
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stderr, '');
+  assert.match(result.stdout, /specstitch check passed/);
+});
+
 test('check rejects invalid threshold flags with usage errors', () => {
   for (const [flag, value, diagnostic] of [
     ['--min-coverage', '-0.1', /between 0 and 1/], ['--min-coverage', '1.1', /between 0 and 1/],
