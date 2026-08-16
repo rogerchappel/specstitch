@@ -55,6 +55,10 @@ Create `specstitch.config.json` to set default paths and thresholds:
 
 CLI flags override config values.
 
+Unknown options, unexpected positional arguments, and flags without their
+required values are usage errors: the CLI prints an actionable diagnostic and
+exits with status `2`.
+
 `minCoverage` and `--min-coverage` accept finite numbers from `0` through `1`,
 inclusive. `maxStale` and `--max-stale` accept non-negative integers. Invalid or
 missing CLI values produce a usage error instead of falling back to defaults.
