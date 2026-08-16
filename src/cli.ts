@@ -9,7 +9,14 @@ const VERSION = '0.1.0';
 type Parsed = { command: string; options: Record<string, string | boolean> };
 
 async function main(argv: string[]): Promise<number> {
-  const parsed = parse(argv);
+  let parsed: Parsed;
+  try {
+    parsed = parse(argv);
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    printHelp();
+    return 2;
+  }
   if (parsed.options.version) {
     console.log(VERSION);
     return 0;
@@ -77,21 +84,25 @@ function parse(argv: string[]): Parsed {
     command = '';
   }
   const options: Record<string, string | boolean> = {};
+  const valueOptions = new Set(['root', 'config', 'prd', 'tasks', 'markdown', 'json', 'min-coverage', 'max-stale']);
+  const booleanOptions = new Set(['help', 'version', 'no-write']);
   for (let i = 0; i < rest.length; i += 1) {
     const arg = rest[i] ?? '';
-    if (!arg.startsWith('--')) continue;
+    if (!arg.startsWith('--')) throw new Error(`Unexpected argument: ${arg}`);
     const key = arg.slice(2);
     if (key === 'no-write') {
       options.write = false;
       continue;
     }
-    const next = rest[i + 1];
-    if (next && !next.startsWith('--')) {
-      options[key] = next;
-      i += 1;
-    } else {
+    if (booleanOptions.has(key)) {
       options[key] = true;
+      continue;
     }
+    if (!valueOptions.has(key)) throw new Error(`Unknown option: ${arg}`);
+    const next = rest[i + 1];
+    if (!next || next.startsWith('--')) throw new Error(`${arg} requires a value`);
+    options[key] = next;
+    i += 1;
   }
   return { command, options };
 }
