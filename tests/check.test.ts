@@ -19,7 +19,7 @@ test('check fails full coverage when a tag is repeated only in requirement sourc
   assert.equal(checked.ok, false);
   assert.deepEqual(checked.failures, [
     'coverage 0% is below minimum 100%',
-    '1 requirement(s) have no evidence'
+    '2 requirement(s) have no evidence'
   ]);
 });
 

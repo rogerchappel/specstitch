@@ -76,9 +76,11 @@ Tagged evidence works best:
 ```
 
 The configured PRD and TASKS files declare requirements; they do not count as
-evidence for one another. When the same explicit tag appears in both, it is
-reported once. Evidence must come from another scanned location such as
-README documentation, `package.json`, source, or tests.
+evidence for one another. An exact tagged declaration repeated in both files is
+reported once. Distinct declaration text is retained even when tags overlap, so
+each independently stated requirement remains visible and matches evidence for
+any of its tags. Evidence must come from another scanned location such as README
+documentation, `package.json`, source, or tests.
 
 Untagged bullets are also matched with simple local keyword heuristics.
 

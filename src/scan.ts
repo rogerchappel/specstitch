@@ -55,12 +55,13 @@ export async function scan(options: ScanOptions): Promise<ScanResult> {
 }
 
 function dedupeTaggedRequirements(requirements: ReturnType<typeof extractRequirements>) {
-  const seenTags = new Set<string>();
+  const seenDeclarations = new Set<string>();
   return requirements.filter((requirement) => {
     if (requirement.tags.length === 0) return true;
-    const duplicate = requirement.tags.some((tag) => seenTags.has(tag));
-    requirement.tags.forEach((tag) => seenTags.add(tag));
-    return !duplicate;
+    const key = `${requirement.tags.join('\0')}\0${requirement.text}`;
+    if (seenDeclarations.has(key)) return false;
+    seenDeclarations.add(key);
+    return true;
   });
 }
 

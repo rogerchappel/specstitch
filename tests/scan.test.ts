@@ -30,9 +30,9 @@ test('requirement declarations in PRD and TASKS do not evidence one another', as
   const result = await scan({ root: path.resolve('tests/fixtures/cross-source-only'), write: false });
 
   assert.deepEqual(result.summary, {
-    total: 1,
+    total: 2,
     covered: 0,
-    orphan: 1,
+    orphan: 2,
     stale: 0,
     coverage: 0
   });
@@ -44,8 +44,8 @@ test('a repeated requirement tag remains covered by implementation evidence', as
   const result = await scan({ root: path.resolve('tests/fixtures/cross-source-backed'), write: false });
 
   assert.deepEqual(result.summary, {
-    total: 1,
-    covered: 1,
+    total: 2,
+    covered: 2,
     orphan: 0,
     stale: 0,
     coverage: 1
@@ -53,4 +53,37 @@ test('a repeated requirement tag remains covered by implementation evidence', as
   assert.deepEqual(result.requirements[0]?.evidence.map(({ file, line }) => ({ file, line })), [
     { file: 'src/widgets.ts', line: 1 }
   ]);
+  assert.deepEqual(result.requirements[1]?.evidence.map(({ file, line }) => ({ file, line })), [
+    { file: 'src/widgets.ts', line: 1 }
+  ]);
+});
+
+test('partially overlapping tag declarations retain every distinct requirement', async () => {
+  const result = await scan({ root: path.resolve('tests/fixtures/overlapping-tags'), write: false });
+
+  assert.deepEqual(result.summary, {
+    total: 3,
+    covered: 3,
+    orphan: 0,
+    stale: 0,
+    coverage: 1
+  });
+  assert.deepEqual(result.requirements.map(({ id, text, tags }) => ({ id, text, tags })), [
+    {
+      id: 'REQ-100',
+      text: 'REQ-100 REQ-200 must preserve the first behavior',
+      tags: ['REQ-100', 'REQ-200']
+    },
+    {
+      id: 'REQ-200',
+      text: 'REQ-200 REQ-300 must preserve the second behavior',
+      tags: ['REQ-200', 'REQ-300']
+    },
+    {
+      id: 'REQ-300',
+      text: 'REQ-300 must preserve the third behavior',
+      tags: ['REQ-300']
+    }
+  ]);
+  assert.equal(result.requirements.some((item) => item.status === 'stale'), false);
 });
