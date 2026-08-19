@@ -30,9 +30,9 @@ test('requirement declarations in PRD and TASKS do not evidence one another', as
   const result = await scan({ root: path.resolve('tests/fixtures/cross-source-only'), write: false });
 
   assert.deepEqual(result.summary, {
-    total: 1,
+    total: 2,
     covered: 0,
-    orphan: 1,
+    orphan: 2,
     stale: 0,
     coverage: 0
   });
@@ -51,6 +51,9 @@ test('a repeated requirement tag remains covered by implementation evidence', as
     coverage: 1
   });
   assert.deepEqual(result.requirements[0]?.evidence.map(({ file, line }) => ({ file, line })), [
+    { file: 'src/widgets.ts', line: 1 }
+  ]);
+  assert.deepEqual(result.requirements[1]?.evidence.map(({ file, line }) => ({ file, line })), [
     { file: 'src/widgets.ts', line: 1 }
   ]);
 });
