@@ -87,3 +87,20 @@ test('partially overlapping tag declarations retain every distinct requirement',
   ]);
   assert.equal(result.requirements.some((item) => item.status === 'stale'), false);
 });
+
+test('scan keeps prefix-related tags internally consistent', async () => {
+  const result = await scan({ root: path.resolve('tests/fixtures/prefix-tags'), write: false });
+
+  assert.deepEqual(result.summary, {
+    total: 1,
+    covered: 0,
+    orphan: 1,
+    stale: 1,
+    coverage: 0
+  });
+  assert.equal(result.requirements.find((item) => item.id === 'REQ-123')?.status, 'orphan');
+  assert.equal(
+    result.requirements.find((item) => item.status === 'stale')?.evidence[0]?.excerpt,
+    '// REQ-1234 implements a different requirement.'
+  );
+});
