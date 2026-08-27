@@ -38,7 +38,8 @@ function findEvidence(requirement: Requirement, documents: Document[]): Evidence
     const lines = document.text.split(/\r?\n/);
     lines.forEach((line, index) => {
       if (isIgnoredLine(line)) return;
-      const explicit = requirement.tags.some((tag) => line.toUpperCase().includes(tag));
+      const lineTags = new Set(extractTags(line));
+      const explicit = requirement.tags.some((tag) => lineTags.has(tag));
       if (explicit && !isSourceLine(requirement, document.file, index + 1)) {
         evidence.push(toEvidence(document.file, index + 1, 'explicit-tag', line, 100));
         return;
