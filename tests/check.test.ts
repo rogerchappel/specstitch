@@ -40,3 +40,19 @@ test('untagged fixture keeps deterministic auto ids', async () => {
   assert.ok(result.requirements.some((item) => item.id === 'PRD-001'));
   assert.ok(result.summary.total >= 2);
 });
+
+test('check rejects prefix-related evidence as both uncovered and stale', async () => {
+  const checked = await check({
+    root: path.resolve('tests/fixtures/prefix-tags'),
+    write: false,
+    minCoverage: 1,
+    maxStale: 0
+  });
+
+  assert.equal(checked.ok, false);
+  assert.deepEqual(checked.failures, [
+    'coverage 0% is below minimum 100%',
+    'stale evidence count 1 is above maximum 0',
+    '1 requirement(s) have no evidence'
+  ]);
+});
