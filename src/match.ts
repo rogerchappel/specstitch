@@ -61,8 +61,17 @@ export function isIgnoredLine(line: string): boolean {
 }
 
 function keywordScore(keywords: string[], line: string): number {
-  const lower = line.toLowerCase();
-  return keywords.filter((keyword) => lower.includes(keyword)).length;
+  const tokens = normalizedTokens(line);
+  return keywords.filter((keyword) => {
+    const keywordTokens = normalizedTokens(keyword);
+    return keywordTokens.length > 0 && tokens.some((_, index) =>
+      keywordTokens.every((token, offset) => tokens[index + offset] === token)
+    );
+  }).length;
+}
+
+function normalizedTokens(value: string): string[] {
+  return value.toLowerCase().match(/[\p{L}\p{N}_]+/gu) ?? [];
 }
 
 function toEvidence(file: string, line: number, kind: Evidence['kind'], excerpt: string, score: number): Evidence {
