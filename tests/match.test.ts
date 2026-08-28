@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { findStaleEvidence, stitchRequirements } from '../src/match.js';
 import { extractRequirements } from '../src/extract.js';
+import type { Requirement } from '../src/types.js';
 
 test('explicit evidence requires complete normalized tags', () => {
   const requirements = extractRequirements(
@@ -35,4 +36,38 @@ test('explicit evidence matches complete tags case-insensitively', () => {
   assert.equal(stitched?.status, 'covered');
   assert.equal(stitched?.evidence[0]?.kind, 'explicit-tag');
   assert.deepEqual(findStaleEvidence(requirements, documents), []);
+});
+
+function requirement(keywords: string[]): Requirement {
+  return {
+    id: 'REQ-500',
+    source: 'prd',
+    text: 'The system must report cache state.',
+    file: 'docs/PRD.md',
+    line: 1,
+    tags: ['REQ-500'],
+    keywords
+  };
+}
+
+test('keyword evidence rejects substring collisions', () => {
+  const [result] = stitchRequirements(
+    [requirement(['system', 'report', 'cache', 'state'])],
+    [{ file: 'src/example.ts', text: 'The ecosystem reporter cached each result.' }]
+  );
+
+  assert.equal(result?.status, 'orphan');
+  assert.deepEqual(result?.evidence, []);
+});
+
+test('keyword evidence matches normalized tokens across case and punctuation', () => {
+  const [result] = stitchRequirements(
+    [requirement(['system', 'report', 'cache', 'state'])],
+    [{ file: 'src/example.ts', text: 'SYSTEM-report: cache state.' }]
+  );
+
+  assert.equal(result?.status, 'covered');
+  assert.deepEqual(result?.evidence.map(({ kind, score }) => ({ kind, score })), [
+    { kind: 'keyword', score: 4 }
+  ]);
 });

@@ -82,7 +82,9 @@ each independently stated requirement remains visible and matches evidence for
 any of its tags. Evidence must come from another scanned location such as README
 documentation, `package.json`, source, or tests.
 
-Untagged bullets are also matched with simple local keyword heuristics.
+Untagged bullets are also matched with simple local keyword heuristics. Keyword
+matching is case-insensitive and uses complete normalized tokens, so punctuation
+forms a boundary while substrings inside longer words do not count as evidence.
 
 ## Safety
 
