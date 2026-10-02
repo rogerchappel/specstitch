@@ -5,18 +5,21 @@ A tiny local-first CLI that stitches PRDs, task lists, docs, tests, and source c
 ## Install
 
 specstitch has not been published to the npm registry yet, so install and run it
-from a source checkout for now:
+from a source checkout for now. The npm registry install route is unavailable
+until the first npm release is published; do not use `npm install -g specstitch`
+before then.
 
 ```bash
 git clone https://github.com/rogerchappel/specstitch.git
 cd specstitch
-npm install
+npm ci
 npm run build
 node dist/src/cli.js scan --root tests/fixtures/tagged-repo
 ```
 
-The global `npm install -g specstitch` command will become available only after
-the first npm release is published.
+`npm ci` installs the exact dependency versions recorded in the committed
+`package-lock.json`. Once a release is published, the global
+`npm install -g specstitch` command will be available.
 
 ## Usage
 
